@@ -180,6 +180,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
                 <div class="flex items-center justify-between md:justify-end gap-2 overflow-x-auto">
                     <div class="flex gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-800 text-xs" id="category-filters"></div>
                     
+                    <!-- ADD NEW Q&A BUTTON -->
                     <button onclick="openModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 text-white font-medium text-xs sm:text-sm flex items-center gap-2 whitespace-nowrap shadow-lg shadow-cyan-500/20">
                         <i class="fa-solid fa-plus"></i> Add Question
                     </button>
@@ -189,7 +190,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             <div class="flex justify-between items-center text-xs text-slate-400 px-2">
                 <span id="qa-count-label">Showing 0 Questions</span>
                 <button onclick="resetDefaultData()" class="hover:text-rose-400 transition-colors flex items-center gap-1">
-                    <i class="fa-solid fa-rotate-left"></i> Reset to Default Questions
+                    <i class="fa-solid fa-rotate-left"></i> Reset to Default 10 Questions
                 </button>
             </div>
 
@@ -309,17 +310,10 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             'NumPy', 'Seaborn', 'Matplotlib', 'Advanced Excel', 'BigQuery', 'Tableau'
         ];
 
-        // BASELINE QUESTIONS (INCLUDING GENERAL STORE SQL ANALYSIS PROJECT)
+        // BASELINE 10 QUESTIONS
         const defaultQA = [
             {
-                id: 'qa-0',
-                category: 'SQL',
-                question: 'Explain your General Store SQL Analysis Project.',
-                answer: '• Professional Summary:\nI performed a comprehensive retail analysis on transactional sales data using MySQL Workbench to evaluate sales drivers, profit margins, product sub-categories, shipping modes, and regional manager performance.\n\n• Key Analytical Modules:\n1. Data Integrity & Auditing: Inspected missing values (e.g., verifying PostalCode IS NULL) and checked quantity bounds.\n2. Aggregations & Filtering: Used GROUP BY and HAVING to isolate top-performing categories (e.g., Phones & Chairs generating over $300k in sales) and identified loss-making sub-categories (Tables, Bookcases) caused by aggressive discounting.\n3. Joins & Relational Mapping: Applied INNER, LEFT, RIGHT, and SELF JOINs with a secondary manager table to measure sales contribution by regional managers (e.g., Roxanne Jones, Sadie Pawlk).\n4. Advanced Queries: Constructed subqueries, correlated subqueries, and set filters (ANY, ALL, IN, LIKE) to analyze unit economics (Sales/Quantity) and city-level net profitability.\n\n• Key Takeaway for Business:\nHigh sales volume does not guarantee profit. Controlling discount rates on key sub-categories directly restores margin integrity.',
-                tags: ['SQL', 'Project', 'MySQL Workbench', 'Joins', 'Aggregations']
-            },
-            {
-                id: 'qa-1',
+                id: 'qa',
                 category: 'SQL',
                 question: 'What is the difference between GROUP BY and Window Functions in SQL?',
                 answer: '• GROUP BY collapses individual rows into a single summary row per group.\n• Window Functions (OVER PARTITION BY) perform calculations while retaining every original row in the dataset.\n\nExample:\nSELECT order_id, customer_id, order_date, amount,\n       SUM(amount) OVER (PARTITION BY customer_id ORDER BY order_date) AS running_total\nFROM orders;',
@@ -402,8 +396,9 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             renderQA();
         });
 
+        // LOAD FROM LOCAL STORAGE OR INITIALIZE
         function loadQAData() {
-            const stored = localStorage.getItem('sathish_qna_storage_v4');
+            const stored = localStorage.getItem('sathish_qna_storage');
             if (stored) {
                 try {
                     qaList = JSON.parse(stored);
@@ -417,7 +412,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
         }
 
         function saveToLocalStorage() {
-            localStorage.setItem('sathish_qna_storage_v4', JSON.stringify(qaList));
+            localStorage.setItem('sathish_qna_storage', JSON.stringify(qaList));
         }
 
         function renderSkills() {
@@ -478,6 +473,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
                             <h4 class="text-base font-semibold text-slate-100">${item.question}</h4>
                         </div>
                         
+                        <!-- ACTION BUTTONS: EDIT & DELETE -->
                         <div class="flex items-center gap-3">
                             <button onclick="event.stopPropagation(); editQA('${item.id}')" title="Edit Question" class="text-slate-400 hover:text-cyan-400 transition-colors p-1">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -503,6 +499,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             icon.classList.toggle('rotate-180');
         }
 
+        // OPEN MODAL FOR ADDING
         function openModal() {
             document.getElementById('qa-form').reset();
             document.getElementById('modal-id').value = '';
@@ -510,6 +507,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             document.getElementById('qa-modal').classList.remove('hidden');
         }
 
+        // OPEN MODAL FOR EDITING
         function editQA(id) {
             const item = qaList.find(q => q.id === id);
             if (!item) return;
@@ -528,24 +526,25 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             document.getElementById('qa-modal').classList.add('hidden');
         }
 
+        // SAVE (ADD OR EDIT) QUESTION
         function saveQA(event) {
             event.preventDefault();
             const id = document.getElementById('modal-id').value;
             const category = document.getElementById('modal-category').value;
-            let question = document.getElementById('modal-question').value.trim();
+            const question = document.getElementById('modal-question').value.trim();
             const answer = document.getElementById('modal-answer').value.trim();
             const tagsInput = document.getElementById('modal-tags').value;
             const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(Boolean) : [category];
 
-            question = question.replace(/^\d+[\.\)]\s*/, '');
-
             if (id) {
+                // EDIT EXISTING
                 const idx = qaList.findIndex(q => q.id === id);
                 if (idx !== -1) {
                     qaList[idx] = { id, category, question, answer, tags };
                     showToast('Question updated successfully!');
                 }
             } else {
+                // ADD NEW
                 const newQA = { id: 'qa-' + Date.now(), category, question, answer, tags };
                 qaList.unshift(newQA);
                 showToast('New question added successfully!');
@@ -556,6 +555,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             closeModal();
         }
 
+        // DELETE QUESTION
         function deleteQA(id) {
             if (confirm('Are you sure you want to delete this question?')) {
                 qaList = qaList.filter(q => q.id !== id);
@@ -565,8 +565,9 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             }
         }
 
+        // RESET TO BASELINE
         function resetDefaultData() {
-            if (confirm('Reset question bank back to default questions?')) {
+            if (confirm('Reset question bank back to default 10 questions? (Custom additions will be cleared)')) {
                 qaList = [...defaultQA];
                 saveToLocalStorage();
                 renderQA();
