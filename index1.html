@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sathish | Data Analyst Interview Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            bg: '#0a0d14',
+                            card: 'rgba(18, 24, 38, 0.7)',
+                            border: 'rgba(56, 189, 248, 0.2)',
+                            primary: '#06b6d4',
+                            accent: '#a855f7',
+                            neon: '#3b82f6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #080b11;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(168, 85, 247, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(14, 165, 233, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.15);
+        }
+
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080b11;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+    </style>
+</head>
+<body class="text-slate-200 font-sans min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid font-mono text-lg">S</i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400 bg-clip-text text-transparent">
+                        Sathish | Data Hub
+                    </h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">Interview Mastery & Knowledge Base</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <button onclick="switchTab('qa-tab')" id="nav-qa" class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check"></i> <span class="hidden md:inline">Q&A Bank</span>
+                </button>
+                <button onclick="switchTab('flashcard-tab')" id="nav-flashcard" class="px-3 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center gap-2">
+                    <i class="fa-solid fa-clone"></i> <span class="hidden md:inline">Flashcard Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-10">
+
+        <!-- Intro Section -->
+        <section id="intro-section" class="glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden border border-cyan-500/20">
+            <div class="relative z-10 flex flex-col lg:flex-row gap-8 items-start justify-between">
+                <div class="lg:w-1/3 space-y-5">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-cyan-500 via-sky-400 to-purple-600 p-0.5 shadow-xl">
+                            <div class="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center">
+                                <i class="fa-solid fa-user-astronaut text-4xl text-cyan-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                Ready to Join
+                            </span>
+                            <h2 class="text-2xl font-bold text-white mt-1">Sathish</h2>
+                            <p class="text-sm text-cyan-400 font-medium">Aspiring Data Analyst</p>
+                            <p class="text-xs text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i> Bangalore, India</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Core Skills</h4>
+                        <div class="flex flex-wrap gap-1.5" id="skill-tags"></div>
+                    </div>
+                </div>
+
+                <div class="lg:w-2/3 glass-card rounded-xl p-6 border-slate-800/80">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                        <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-address-card text-cyan-400"></i> Self Introduction Pitch
+                        </h3>
+                    </div>
+                    <p id="bio-text" class="text-slate-300 text-sm md:text-base leading-relaxed whitespace-pre-line">
+Hi, my name is Sathish and I’m from Bangalore. I completed my B.Com from SRN Adarsh College. 
+
+After graduating, I worked as an Operations Executive at Vindhya E-Infomedia. I managed loan processing data using Excel, filtering out key information to support the business. Working hands-on with those records is what built my passion for data analysis. 
+
+To build on that interest, I took Google Data Analytics courses on Coursera to learn BigQuery, Tableau, Excel, Python, and R. Wanting to go even deeper, I enrolled in an intensive Data Analytics program at Besant Technologies, where I mastered MySQL Workbench, Advanced Excel, Power BI, and Python libraries like Pandas, NumPy, Seaborn, and Matplotlib. 
+
+I’m now looking for a Data Analyst role where I can apply these skills to solve business problems, and I’m ready to join immediately.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Q&A TAB -->
+        <section id="qa-tab" class="space-y-6">
+            <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 glass-panel p-4 rounded-xl">
+                <div class="relative flex-grow max-w-md">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                    <input type="text" id="search-input" oninput="renderQA()" placeholder="Search questions, answers, or tags..." 
+                           class="w-full bg-slate-900/80 border border-slate-700/60 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+                </div>
+
+                <div class="flex items-center justify-between md:justify-end gap-2 overflow-x-auto">
+                    <div class="flex gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-800 text-xs" id="category-filters"></div>
+                    
+                    <button onclick="openModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 text-white font-medium text-xs sm:text-sm flex items-center gap-2 whitespace-nowrap shadow-lg shadow-cyan-500/20">
+                        <i class="fa-solid fa-plus"></i> Add Question
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center text-xs text-slate-400 px-2">
+                <span id="qa-count-label">Showing 0 Questions</span>
+                <button onclick="resetDefaultData()" class="hover:text-rose-400 transition-colors flex items-center gap-1">
+                    <i class="fa-solid fa-rotate-left"></i> Reset to Default Questions
+                </button>
+            </div>
+
+            <div id="qa-container" class="space-y-4"></div>
+        </section>
+
+        <!-- FLASHCARD TAB -->
+        <section id="flashcard-tab" class="hidden space-y-6">
+            <div class="text-center max-w-xl mx-auto space-y-2">
+                <h3 class="text-xl font-bold text-white">Interview Revision Flashcards</h3>
+                <p class="text-xs text-slate-400">Click card to reveal answer</p>
+            </div>
+
+            <div class="max-w-xl mx-auto min-h-[320px] perspective-1000">
+                <div id="flashcard" onclick="flipFlashcard()" class="relative w-full h-80 rounded-2xl cursor-pointer transform-style-3d transition-transform duration-500 glass-panel border border-cyan-500/30 shadow-2xl p-8 flex flex-col justify-between items-center text-center select-none">
+                    
+                    <div class="absolute inset-0 backface-hidden p-8 flex flex-col justify-between items-center bg-slate-900/90 rounded-2xl border border-cyan-500/30">
+                        <span id="fc-category" class="px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 uppercase">
+                            Category
+                        </span>
+                        <div class="space-y-3">
+                            <i class="fa-solid fa-circle-question text-3xl text-cyan-400 opacity-80"></i>
+                            <h4 id="fc-question" class="text-lg md:text-xl font-semibold text-white leading-relaxed">
+                                Question Loading...
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-500"><i class="fa-solid fa-hand-pointer mr-1"></i> Click to flip</p>
+                    </div>
+
+                    <div class="absolute inset-0 backface-hidden rotate-y-180 p-8 flex flex-col justify-between items-center bg-slate-800/90 rounded-2xl border border-purple-500/30 overflow-y-auto">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-300 border border-purple-500/30 uppercase">
+                            Answer
+                        </span>
+                        <p id="fc-answer" class="text-sm md:text-base text-slate-200 leading-relaxed font-normal my-auto py-2 whitespace-pre-line">
+                            Answer loading...
+                        </p>
+                        <p class="text-xs text-slate-500"><i class="fa-solid fa-rotate mr-1"></i> Click to flip back</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center space-x-6">
+                <button onclick="prevFlashcard()" class="w-12 h-12 rounded-full glass-card hover:bg-slate-700 text-slate-200 flex items-center justify-center">
+                    <i class="fa-solid fa-chevron-left text-lg"></i>
+                </button>
+                <span id="fc-counter" class="text-xs font-mono text-slate-400">0 / 0</span>
+                <button onclick="nextFlashcard()" class="w-12 h-12 rounded-full glass-card hover:bg-slate-700 text-slate-200 flex items-center justify-center">
+                    <i class="fa-solid fa-chevron-right text-lg"></i>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Form (ADD & EDIT QUESTION) -->
+    <div id="qa-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-lg rounded-2xl p-6 border border-cyan-500/30 space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 id="modal-title" class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-cyan-400"></i> <span id="modal-heading-text">Add New Question</span>
+                </h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="qa-form" onsubmit="saveQA(event)" class="space-y-4">
+                <input type="hidden" id="modal-id">
+                
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Category</label>
+                    <select id="modal-category" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
+                        <option value="SQL">SQL</option>
+                        <option value="Power BI">Power BI</option>
+                        <option value="Python">Python</option>
+                        <option value="Excel">Excel</option>
+                        <option value="Business Case">Business Case</option>
+                        <option value="Statistics">Statistics</option>
+                        <option value="Behavioral">Behavioral</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Question</label>
+                    <input type="text" id="modal-question" required placeholder="Enter question..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Answer Explanation</label>
+                    <textarea id="modal-answer" required rows="5" placeholder="Enter full answer explanation..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 resize-none focus:outline-none focus:border-cyan-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Tags (Comma Separated)</label>
+                    <input type="text" id="modal-tags" placeholder="e.g. SQL, Window Functions, Optimization" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-3 border-t border-slate-800">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs hover:bg-slate-700">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs transition-all">Save Question</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-3 rounded-xl glass-panel border border-cyan-500/40 text-cyan-300 text-xs font-medium flex items-center gap-2 shadow-xl">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-message">Notification</span>
+    </div>
+
+    <!-- JavaScript Database & App Logic -->
+    <script>
+        const skillsList = [
+            'SQL', 'MySQL Workbench', 'Power BI', 'Python', 'Pandas', 
+            'NumPy', 'Seaborn', 'Matplotlib', 'Advanced Excel', 'BigQuery', 'Tableau'
+        ];
+
+        // BASELINE QUESTIONS (INCLUDING GENERAL STORE SQL ANALYSIS PROJECT)
+        const defaultQA = [
+            {
+                id: 'qa-0',
+                category: 'SQL',
+                question: 'Explain your General Store SQL Analysis Project.',
+                answer: '• Professional Summary:\nI performed a comprehensive retail analysis on transactional sales data using MySQL Workbench to evaluate sales drivers, profit margins, product sub-categories, shipping modes, and regional manager performance.\n\n• Key Analytical Modules:\n1. Data Integrity & Auditing: Inspected missing values (e.g., verifying PostalCode IS NULL) and checked quantity bounds.\n2. Aggregations & Filtering: Used GROUP BY and HAVING to isolate top-performing categories (e.g., Phones & Chairs generating over $300k in sales) and identified loss-making sub-categories (Tables, Bookcases) caused by aggressive discounting.\n3. Joins & Relational Mapping: Applied INNER, LEFT, RIGHT, and SELF JOINs with a secondary manager table to measure sales contribution by regional managers (e.g., Roxanne Jones, Sadie Pawlk).\n4. Advanced Queries: Constructed subqueries, correlated subqueries, and set filters (ANY, ALL, IN, LIKE) to analyze unit economics (Sales/Quantity) and city-level net profitability.\n\n• Key Takeaway for Business:\nHigh sales volume does not guarantee profit. Controlling discount rates on key sub-categories directly restores margin integrity.',
+                tags: ['SQL', 'Project', 'MySQL Workbench', 'Joins', 'Aggregations']
+            },
+            {
+                id: 'qa-1',
+                category: 'SQL',
+                question: 'What is the difference between GROUP BY and Window Functions in SQL?',
+                answer: '• GROUP BY collapses individual rows into a single summary row per group.\n• Window Functions (OVER PARTITION BY) perform calculations while retaining every original row in the dataset.\n\nExample:\nSELECT order_id, customer_id, order_date, amount,\n       SUM(amount) OVER (PARTITION BY customer_id ORDER BY order_date) AS running_total\nFROM orders;',
+                tags: ['SQL', 'Window Functions', 'GROUP BY']
+            },
+            {
+                id: 'qa-2',
+                category: 'SQL',
+                question: 'Explain the difference between RANK(), DENSE_RANK(), and ROW_NUMBER().',
+                answer: '• ROW_NUMBER(): Assigns a unique sequential integer to each row (1, 2, 3, 4) regardless of ties.\n• RANK(): Assigns the same rank to identical values, but skips subsequent ranks (1, 2, 2, 4).\n• DENSE_RANK(): Assigns the same rank to identical values without skipping ranks (1, 2, 2, 3).',
+                tags: ['SQL', 'Ranking', 'Window Functions']
+            },
+            {
+                id: 'qa-3',
+                category: 'Power BI',
+                question: 'In Power BI, when do you create a Calculated Column versus a DAX Measure?',
+                answer: '• Calculated Column: Evaluated row-by-row during data refresh, stored in RAM, and used when placing values on a visual axis or matrix column.\n• DAX Measure: Evaluated dynamically at query time based on slicers without using permanent RAM storage. Always prefer Measures for aggregations.',
+                tags: ['Power BI', 'DAX', 'Calculated Column', 'Measures']
+            },
+            {
+                id: 'qa-4',
+                category: 'Python',
+                question: 'How do .loc[] and .iloc[] differ in Python Pandas?',
+                answer: '• .loc[]: Label-based indexer. Used for selecting data using explicit row/column names or boolean condition masks (e.g., df.loc[df["Age"] > 25, "Name"]).\n• .iloc[]: Integer position-based indexer. Used for selecting data using numerical index positions (e.g., df.iloc[0:5, 1:3]).',
+                tags: ['Python', 'Pandas', 'Dataframes', 'Indexing']
+            },
+            {
+                id: 'qa-5',
+                category: 'Business Case',
+                question: 'Scenario: "Our daily food delivery orders dropped by 12% in Bangalore today. How would you investigate this?"',
+                answer: 'Break down the root-cause analysis systematically:\n1. Data Integrity: Check if data pipelines or logging failed.\n2. Internal Factors: Check for app crashes, checkout payment gateway issues, or promo code failures.\n3. External Factors: Check for heavy rain in Bangalore, driver shortages, or public holidays.\n4. Segmentation: Slice the data by area (Koramangala vs Whitefield) and app version (iOS vs Android).',
+                tags: ['Business Case', 'Root Cause', 'Bangalore']
+            },
+            {
+                id: 'qa-6',
+                category: 'Business Case',
+                question: 'How would you design an A/B test for a new checkout button feature?',
+                answer: '1. Hypothesis: Define Primary Metric (Conversion Rate) and Guardrail Metric (Refund Rate).\n2. Randomization: Randomly split users at user_id level to avoid bias.\n3. Sample Size & Duration: Run the test for 7–14 days to capture full weekly purchase cycles.\n4. Validation: Calculate p-value (<0.05) to ensure statistical significance before rollout.',
+                tags: ['Business Case', 'A/B Testing', 'Experimentation']
+            },
+            {
+                id: 'qa-7',
+                category: 'Statistics',
+                question: 'How do you identify and handle outliers in a dataset?',
+                answer: '• Detection:\n  - Interquartile Range (IQR): Values below Q1 - 1.5*IQR or above Q3 + 1.5*IQR.\n  - Z-Score: Values with Z-score > 3 or < -3.\n• Treatment:\n  - Capping/Flooring (Winsorization).\n  - Removing corrupted logging errors.\n  - Applying Log Transformations.',
+                tags: ['Statistics', 'Outliers', 'Data Cleaning']
+            },
+            {
+                id: 'qa-8',
+                category: 'Statistics',
+                question: 'What is a p-value, and what does a p-value of 0.03 mean?',
+                answer: '• p-value measures the probability that the observed results happened by random chance under the Null Hypothesis.\n• A p-value of 0.03 means there is only a 3% chance the outcome was random noise. Since 0.03 < 0.05, we reject the Null Hypothesis and consider the result statistically significant.',
+                tags: ['Statistics', 'p-value', 'Hypothesis Testing']
+            },
+            {
+                id: 'qa-9',
+                category: 'Behavioral',
+                question: 'Scenario: "A business stakeholder asks for a dashboard showing all metrics. How do you handle this?"',
+                answer: '1. Clarify Requirements: Ask what key business decisions this dashboard will drive daily.\n2. Prioritize KPIs: Instead of putting 50 metrics on one screen, design a dashboard with 3–5 core KPIs at the top and drill-down pages for details.\n3. Align on Actions: Ensure every visual answers a specific business action.',
+                tags: ['Behavioral', 'Stakeholder Management', 'Dashboards']
+            },
+            {
+                id: 'qa-10',
+                category: 'Behavioral',
+                question: 'Tell me about a time your data analysis yielded an incorrect result. How did you handle it?',
+                answer: 'Use the STAR Method:\n• Situation: Identified a duplicated SQL JOIN that double-counted revenue.\n• Action: Caught the error during validation, informed stakeholders immediately, and corrected the query.\n• Result: Implemented automated check scripts to prevent join duplicates in future reports.',
+                tags: ['Behavioral', 'STAR Method', 'Data Integrity']
+            }
+        ];
+
+        let qaList = [];
+        let currentCategory = 'ALL';
+        let currentFlashcardIndex = 0;
+        let isFlashcardFlipped = false;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadQAData();
+            renderSkills();
+            renderCategoryFilters();
+            renderQA();
+        });
+
+        function loadQAData() {
+            const stored = localStorage.getItem('sathish_qna_storage_v4');
+            if (stored) {
+                try {
+                    qaList = JSON.parse(stored);
+                } catch (e) {
+                    qaList = [...defaultQA];
+                }
+            } else {
+                qaList = [...defaultQA];
+                saveToLocalStorage();
+            }
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('sathish_qna_storage_v4', JSON.stringify(qaList));
+        }
+
+        function renderSkills() {
+            document.getElementById('skill-tags').innerHTML = skillsList.map(skill => `
+                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800 text-cyan-300 border border-slate-700">
+                    ${skill}
+                </span>
+            `).join('');
+        }
+
+        const categories = ['ALL', 'SQL', 'Power BI', 'Python', 'Excel', 'Business Case', 'Statistics', 'Behavioral'];
+
+        function renderCategoryFilters() {
+            document.getElementById('category-filters').innerHTML = categories.map(cat => `
+                <button onclick="setCategory('${cat}')" class="px-3 py-1 rounded-lg transition-all ${currentCategory === cat ? 'bg-cyan-500 text-black font-semibold' : 'text-slate-400 hover:text-slate-200'}">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            renderCategoryFilters();
+            renderQA();
+        }
+
+        function getFilteredQAs() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            return qaList.filter(item => {
+                const matchesCategory = currentCategory === 'ALL' || item.category === currentCategory;
+                const matchesSearch = item.question.toLowerCase().includes(searchTerm) ||
+                                      item.answer.toLowerCase().includes(searchTerm) ||
+                                      item.tags.some(t => t.toLowerCase().includes(searchTerm));
+                return matchesCategory && matchesSearch;
+            });
+        }
+
+        function renderQA() {
+            const filtered = getFilteredQAs();
+            const container = document.getElementById('qa-container');
+            document.getElementById('qa-count-label').innerText = `Showing ${filtered.length} of ${qaList.length} Questions`;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-slate-400">No questions found. Click 'Add Question' to create one.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="glass-card rounded-xl border border-slate-800 overflow-hidden">
+                    <div onclick="toggleAccordion('${item.id}')" class="p-5 flex items-start justify-between cursor-pointer hover:bg-slate-800/40">
+                        <div class="space-y-2 pr-4">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase">
+                                    ${item.category}
+                                </span>
+                                ${item.tags.map(tag => `<span class="text-[10px] text-slate-400 bg-slate-900 px-2 py-0.5 rounded">#${tag}</span>`).join('')}
+                            </div>
+                            <h4 class="text-base font-semibold text-slate-100">${item.question}</h4>
+                        </div>
+                        
+                        <div class="flex items-center gap-3">
+                            <button onclick="event.stopPropagation(); editQA('${item.id}')" title="Edit Question" class="text-slate-400 hover:text-cyan-400 transition-colors p-1">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="event.stopPropagation(); deleteQA('${item.id}')" title="Delete Question" class="text-slate-400 hover:text-rose-400 transition-colors p-1">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                            <div id="icon-${item.id}" class="text-slate-400 text-xs transition-transform ml-1"><i class="fa-solid fa-chevron-down"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div id="ans-${item.id}" class="hidden border-t border-slate-800 bg-slate-950/40 p-5 text-sm text-slate-300 leading-relaxed whitespace-pre-line font-sans">
+                        ${item.answer}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleAccordion(id) {
+            const ans = document.getElementById(`ans-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            ans.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        function openModal() {
+            document.getElementById('qa-form').reset();
+            document.getElementById('modal-id').value = '';
+            document.getElementById('modal-heading-text').innerText = 'Add New Question';
+            document.getElementById('qa-modal').classList.remove('hidden');
+        }
+
+        function editQA(id) {
+            const item = qaList.find(q => q.id === id);
+            if (!item) return;
+
+            document.getElementById('modal-id').value = item.id;
+            document.getElementById('modal-category').value = item.category;
+            document.getElementById('modal-question').value = item.question;
+            document.getElementById('modal-answer').value = item.answer;
+            document.getElementById('modal-tags').value = item.tags.join(', ');
+            document.getElementById('modal-heading-text').innerText = 'Edit Question';
+            
+            document.getElementById('qa-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('qa-modal').classList.add('hidden');
+        }
+
+        function saveQA(event) {
+            event.preventDefault();
+            const id = document.getElementById('modal-id').value;
+            const category = document.getElementById('modal-category').value;
+            let question = document.getElementById('modal-question').value.trim();
+            const answer = document.getElementById('modal-answer').value.trim();
+            const tagsInput = document.getElementById('modal-tags').value;
+            const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(Boolean) : [category];
+
+            question = question.replace(/^\d+[\.\)]\s*/, '');
+
+            if (id) {
+                const idx = qaList.findIndex(q => q.id === id);
+                if (idx !== -1) {
+                    qaList[idx] = { id, category, question, answer, tags };
+                    showToast('Question updated successfully!');
+                }
+            } else {
+                const newQA = { id: 'qa-' + Date.now(), category, question, answer, tags };
+                qaList.unshift(newQA);
+                showToast('New question added successfully!');
+            }
+
+            saveToLocalStorage();
+            renderQA();
+            closeModal();
+        }
+
+        function deleteQA(id) {
+            if (confirm('Are you sure you want to delete this question?')) {
+                qaList = qaList.filter(q => q.id !== id);
+                saveToLocalStorage();
+                renderQA();
+                showToast('Question deleted.');
+            }
+        }
+
+        function resetDefaultData() {
+            if (confirm('Reset question bank back to default questions?')) {
+                qaList = [...defaultQA];
+                saveToLocalStorage();
+                renderQA();
+                showToast('Reset back to default questions.');
+            }
+        }
+
+        function switchTab(tabId) {
+            ['qa-tab', 'flashcard-tab'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            if (tabId === 'flashcard-tab') initFlashcardMode();
+        }
+
+        function initFlashcardMode() {
+            currentFlashcardIndex = 0;
+            updateFlashcardUI();
+        }
+
+        function updateFlashcardUI() {
+            const card = document.getElementById('flashcard');
+            const filtered = getFilteredQAs();
+            card.classList.remove('rotate-y-180');
+            isFlashcardFlipped = false;
+
+            if (filtered.length === 0) return;
+            const current = filtered[currentFlashcardIndex];
+            document.getElementById('fc-category').innerText = current.category;
+            document.getElementById('fc-question').innerText = current.question;
+            document.getElementById('fc-answer').innerText = current.answer;
+            document.getElementById('fc-counter').innerText = `${currentFlashcardIndex + 1} / ${filtered.length}`;
+        }
+
+        function flipFlashcard() {
+            isFlashcardFlipped = !isFlashcardFlipped;
+            document.getElementById('flashcard').classList.toggle('rotate-y-180', isFlashcardFlipped);
+        }
+
+        function nextFlashcard() {
+            const filtered = getFilteredQAs();
+            if (filtered.length === 0) return;
+            currentFlashcardIndex = (currentFlashcardIndex + 1) % filtered.length;
+            updateFlashcardUI();
+        }
+
+        function prevFlashcard() {
+            const filtered = getFilteredQAs();
+            if (filtered.length === 0) return;
+            currentFlashcardIndex = (currentFlashcardIndex - 1 + filtered.length) % filtered.length;
+            updateFlashcardUI();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
+        }
+    </script>
+</body>
+</html>
