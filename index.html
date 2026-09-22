@@ -180,7 +180,6 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
                 <div class="flex items-center justify-between md:justify-end gap-2 overflow-x-auto">
                     <div class="flex gap-1 bg-slate-900/60 p-1 rounded-xl border border-slate-800 text-xs" id="category-filters"></div>
                     
-                    <!-- ADD NEW Q&A BUTTON -->
                     <button onclick="openModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 text-white font-medium text-xs sm:text-sm flex items-center gap-2 whitespace-nowrap shadow-lg shadow-cyan-500/20">
                         <i class="fa-solid fa-plus"></i> Add Question
                     </button>
@@ -190,7 +189,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             <div class="flex justify-between items-center text-xs text-slate-400 px-2">
                 <span id="qa-count-label">Showing 0 Questions</span>
                 <button onclick="resetDefaultData()" class="hover:text-rose-400 transition-colors flex items-center gap-1">
-                    <i class="fa-solid fa-rotate-left"></i> Reset to Default 10 Questions
+                    <i class="fa-solid fa-rotate-left"></i> Reset to Default Questions
                 </button>
             </div>
 
@@ -286,7 +285,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
 
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Tags (Comma Separated)</label>
-                    <input type="text" id="modal-tags" placeholder="e.g. SQL, Window Functions, Optimization" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
+                    <input type="text" id="modal-tags" placeholder="e.g. Power BI, Project, Airbnb" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
                 </div>
 
                 <div class="flex justify-end space-x-3 pt-3 border-t border-slate-800">
@@ -310,10 +309,31 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             'NumPy', 'Seaborn', 'Matplotlib', 'Advanced Excel', 'BigQuery', 'Tableau'
         ];
 
-        // BASELINE 10 QUESTIONS
+        // BASELINE QUESTIONS (WITH AIRBNB PERFORMANCE ANALYSIS ADDED TO POWER BI)
         const defaultQA = [
             {
-                id: 'qa',
+                id: 'qa-airbnb-pb',
+                category: 'Power BI',
+                question: 'Explain your Global Airbnb Performance Analysis Project.',
+                answer: '1. Project Goal: Built an interactive Power BI dashboard to evaluate Airbnb performance across 2,79,712 listings, 1,82,024 hosts, 144 property types, and 10 major global cities with 5,373K reviews.\n2. Market Concentration: Top markets (Paris, New York City, and Sydney) account for nearly 50% of all listings and 59% of total reviews. Paris has the highest listings, driven by hotel room prices being double the cost of an Airbnb.\n3. Rating Performance: Mexico City and Rio de Janeiro achieved the highest overall ratings, while Hong Kong and Istanbul scored lowest. Cleanliness and value for money consistently scored lowest across cities.\n4. Growth Life Cycle: Visualized listing trends from 2008 to 2020. New listings peaked in 2015, paused due to local regulations (2016–2017), rebounded in 2018, and sharply declined during COVID-19 in 2020.\n5. Seasonality Trends: Paris and Rome saw review spikes from April to August (European summer peak), while NYC experienced demand spikes in November and December (holiday season).\n6. Trust Metrics: Analysis showed 66.9% of hosts have both verified identity and a profile picture. Unverified accounts with no profile picture accounted for just 0.3%.\n7. Data Quality Audit: Identified review distribution anomalies where 86.5% of users wrote only 1 review, while a single user logged 283 reviews in Bangkok, flagging potential data noise.\n8. Business Recommendation: Focus host onboarding in high-hotel-cost cities like Paris, and improve cleanliness/value metrics to elevate overall customer retention.',
+                tags: ['Power BI', 'Project', 'Airbnb', 'Market Analysis', 'DAX', 'Data Visualization']
+            },
+            {
+                id: 'qa-churn',
+                category: 'Python',
+                question: 'Walk me through your Customer Churn Analysis project.',
+                answer: '1. Project Goal: Built an end-to-end Python and SQL project to analyze customer churn and find why users cancel subscriptions.\n2. Data Ingestion: Loaded raw Excel data into SQLite tables to easily query and combine customer, subscription, and support data.\n3. Data Cleaning: Fixed missing values, dropped useless columns, converted dates, and standardized gender labels.\n4. Feature Engineering: Created a churn_flag to track churned users and calculated total complaints per customer.\n5. Key Metrics: Overall churn rate was 28.57%, with a retention rate of 71.43% and an average tenure of 1,524 days.\n6. Revenue Impact: Calculated Average Revenue Per User (ARPU) as 18.85 and total Revenue at Risk as 73.94.\n7. Major Insight #1: Basic plan users churned the most at 60%, compared to 22.22% for Standard and 14.29% for Premium.\n8. Major Insight #2: Customer support escalations showed a very strong positive correlation (0.77) with customer churn.\n9. Visualizations: Built trend lines, bar charts, and correlation heatmaps using Matplotlib and Seaborn to spot high-risk groups.\n10. Business Takeaway: Recommended improving customer support resolution times and optimizing the Basic plan to protect at-risk revenue.',
+                tags: ['Python', 'Project', 'Churn Analysis', 'Pandas', 'Seaborn', 'SQL']
+            },
+            {
+                id: 'qa-0',
+                category: 'SQL',
+                question: 'Explain your General Store SQL Analysis Project.',
+                answer: '• Professional Summary:\nI performed a comprehensive retail analysis on transactional sales data using MySQL Workbench to evaluate sales drivers, profit margins, product sub-categories, shipping modes, and regional manager performance.\n\n• Key Analytical Modules:\n1. Data Integrity & Auditing: Inspected missing values (e.g., verifying PostalCode IS NULL) and checked quantity bounds.\n2. Aggregations & Filtering: Used GROUP BY and HAVING to isolate top-performing categories (e.g., Phones & Chairs generating over $300k in sales) and identified loss-making sub-categories (Tables, Bookcases) caused by aggressive discounting.\n3. Joins & Relational Mapping: Applied INNER, LEFT, RIGHT, and SELF JOINs with a secondary manager table to measure sales contribution by regional managers (e.g., Roxanne Jones, Sadie Pawlk).\n4. Advanced Queries: Constructed subqueries, correlated subqueries, and set filters (ANY, ALL, IN, LIKE) to analyze unit economics (Sales/Quantity) and city-level net profitability.\n\n• Key Takeaway for Business:\nHigh sales volume does not guarantee profit. Controlling discount rates on key sub-categories directly restores margin integrity.',
+                tags: ['SQL', 'Project', 'MySQL Workbench', 'Joins', 'Aggregations']
+            },
+            {
+                id: 'qa-1',
                 category: 'SQL',
                 question: 'What is the difference between GROUP BY and Window Functions in SQL?',
                 answer: '• GROUP BY collapses individual rows into a single summary row per group.\n• Window Functions (OVER PARTITION BY) perform calculations while retaining every original row in the dataset.\n\nExample:\nSELECT order_id, customer_id, order_date, amount,\n       SUM(amount) OVER (PARTITION BY customer_id ORDER BY order_date) AS running_total\nFROM orders;',
@@ -396,9 +416,8 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             renderQA();
         });
 
-        // LOAD FROM LOCAL STORAGE OR INITIALIZE
         function loadQAData() {
-            const stored = localStorage.getItem('sathish_qna_storage');
+            const stored = localStorage.getItem('sathish_qna_storage_v6');
             if (stored) {
                 try {
                     qaList = JSON.parse(stored);
@@ -412,7 +431,7 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
         }
 
         function saveToLocalStorage() {
-            localStorage.setItem('sathish_qna_storage', JSON.stringify(qaList));
+            localStorage.setItem('sathish_qna_storage_v6', JSON.stringify(qaList));
         }
 
         function renderSkills() {
@@ -473,7 +492,6 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
                             <h4 class="text-base font-semibold text-slate-100">${item.question}</h4>
                         </div>
                         
-                        <!-- ACTION BUTTONS: EDIT & DELETE -->
                         <div class="flex items-center gap-3">
                             <button onclick="event.stopPropagation(); editQA('${item.id}')" title="Edit Question" class="text-slate-400 hover:text-cyan-400 transition-colors p-1">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -499,7 +517,6 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             icon.classList.toggle('rotate-180');
         }
 
-        // OPEN MODAL FOR ADDING
         function openModal() {
             document.getElementById('qa-form').reset();
             document.getElementById('modal-id').value = '';
@@ -507,7 +524,6 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             document.getElementById('qa-modal').classList.remove('hidden');
         }
 
-        // OPEN MODAL FOR EDITING
         function editQA(id) {
             const item = qaList.find(q => q.id === id);
             if (!item) return;
@@ -526,25 +542,24 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             document.getElementById('qa-modal').classList.add('hidden');
         }
 
-        // SAVE (ADD OR EDIT) QUESTION
         function saveQA(event) {
             event.preventDefault();
             const id = document.getElementById('modal-id').value;
             const category = document.getElementById('modal-category').value;
-            const question = document.getElementById('modal-question').value.trim();
+            let question = document.getElementById('modal-question').value.trim();
             const answer = document.getElementById('modal-answer').value.trim();
             const tagsInput = document.getElementById('modal-tags').value;
             const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(Boolean) : [category];
 
+            question = question.replace(/^\d+[\.\)]\s*/, '');
+
             if (id) {
-                // EDIT EXISTING
                 const idx = qaList.findIndex(q => q.id === id);
                 if (idx !== -1) {
                     qaList[idx] = { id, category, question, answer, tags };
                     showToast('Question updated successfully!');
                 }
             } else {
-                // ADD NEW
                 const newQA = { id: 'qa-' + Date.now(), category, question, answer, tags };
                 qaList.unshift(newQA);
                 showToast('New question added successfully!');
@@ -555,7 +570,6 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             closeModal();
         }
 
-        // DELETE QUESTION
         function deleteQA(id) {
             if (confirm('Are you sure you want to delete this question?')) {
                 qaList = qaList.filter(q => q.id !== id);
@@ -565,9 +579,8 @@ I’m now looking for a Data Analyst role where I can apply these skills to solv
             }
         }
 
-        // RESET TO BASELINE
         function resetDefaultData() {
-            if (confirm('Reset question bank back to default 10 questions? (Custom additions will be cleared)')) {
+            if (confirm('Reset question bank back to default questions?')) {
                 qaList = [...defaultQA];
                 saveToLocalStorage();
                 renderQA();
